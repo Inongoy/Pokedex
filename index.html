@@ -1,0 +1,111 @@
+<html>
+<head>
+    <link href="./main.css" rel="stylesheet" type="text/css">
+    <title>Innocent Ngoy Project 1</title>
+    <script>
+        let pokemonData = null;
+        let currentPokemonIndex = 0;
+
+        function getJSONAsync(url) {
+            const request = new XMLHttpRequest();
+
+            request.onload = function () {
+                if (request.status === 200) {
+                    pokemonData = JSON.parse(request.responseText)['pokemon'];
+                    displayPokemonDataByIndex(currentPokemonIndex);
+                }
+            };
+
+            request.open("GET", url, true);
+            request.send();
+        }
+
+        function displayPokemonDataByIndex(index) {
+            if (pokemonData && pokemonData[index]) {
+                const pokemon = pokemonData[index];
+                displayPokemonByObj(pokemon);
+            }
+        }
+
+        function displayPokemonByObj(pokemon) {
+            document.getElementById("pokemonImage").src = pokemon['img'];
+
+            document.getElementById("pokemonId").value = pokemon['id'];
+            document.getElementById("pokemonNum").value = pokemon['num'];
+            document.getElementById("pokemonName").innerText = pokemon['name'];
+            document.getElementById("pokemonHeight").value = pokemon['height'];
+            document.getElementById("pokemonWeight").value = pokemon['weight'];
+        }
+
+        function getDataAsync() {
+            const tempURL = "https://raw.githubusercontent.com/Biuni/PokemonGO-Pokedex/master/pokedex.json";
+            getJSONAsync(tempURL);
+        }
+
+        function nextPokemon() {
+            if (currentPokemonIndex < pokemonData.length - 1) {
+                currentPokemonIndex++;
+                displayPokemonDataByIndex(currentPokemonIndex);
+            }
+        }
+
+        function previousPokemon() {
+            if (currentPokemonIndex > 0) {
+                currentPokemonIndex--;
+                displayPokemonDataByIndex(currentPokemonIndex);
+            }
+        }
+
+        function search() {
+            let currentNumber = document.getElementById("pokemonId").value;
+            if(isNaN(currentNumber)) return;
+
+            currentNumber = parseInt(currentNumber);
+
+            const pokemon = pokemonData.find(x => x.id === currentNumber);
+            if(!pokemon) return;
+
+            displayPokemonByObj(pokemon);
+            currentPokemonIndex = pokemon.id - 1;
+        }
+
+        getDataAsync();
+        const video = document.getElementById("myVideo");
+    </script>
+</head>
+<body>
+<div class="content">
+    <h1 id="pokemonName"></h1>
+    <img alt="Pokemon image" id="pokemonImage" src="">
+
+    <h3>Pokemon ID</h3>
+    <input id="pokemonId" maxlength="40" size="40" type="text"/>
+
+    <h3>Pokemon Num</h3>
+    <input id="pokemonNum" maxlength="40" size="40" type="text"/>
+
+    <h3>Pokemon Height</h3>
+    <input id="pokemonHeight" maxlength="40" readonly="readonly" size="40" type="text"/>
+
+    <h3>Pokemon Weight</h3>
+    <input id="pokemonWeight" maxlength="40" readonly="readonly" size="40" type="text"/>
+
+    <br>
+    <br>
+    <div style="display: flex; justify-content: space-between;">
+        <button style="margin-right: 10px;" onclick="previousPokemon()">Previous Pokemon</button>
+        <button onclick="nextPokemon()">Next Pokemon</button>
+    </div>
+
+    <br>
+    <br>
+    <input id="btnAsync" onclick="search()" type="button" value="Retrieve">
+
+
+</div>
+
+<video autoplay muted loop id="myVideo">
+    <source src="./video/Pikachu Pixel Animated Loop.mp4" type="video/mp4">
+</video>
+</body>
+</html>

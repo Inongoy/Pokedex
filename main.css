@@ -1,0 +1,74 @@
+#myVideo {
+  position: fixed;
+  z-index: -1;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 2em;
+}
+
+h1 {
+  color: #333;
+  font-size: 2em;
+}
+
+h3 {
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 1);
+  font-size: 1.2em;
+}
+
+input[type="text"] {
+  padding: 0.5em;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 0 15px 4px rgba(0,0,0,0.4);
+}
+
+input[type="button"], button {
+  background-image: url('/img/download.png');
+  border-radius: 5px;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  transition-duration: 0.4s;
+}
+
+input[type="button"]:hover, button:hover {
+  background-color: #2980b9;
+}
+
+input:focus {
+  border: none;
+  outline: none;
+}
+
+#btnAsync {
+  background-color: blue;
+  color: white;
+}
+
+#btnAsync:hover {
+  background-color: darkblue;
+}
+
